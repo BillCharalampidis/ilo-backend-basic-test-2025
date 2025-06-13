@@ -1,18 +1,19 @@
 <?php
     $tasks = [];
+    $file = 'tasks.json';
+    if (file_exists($file)){
+        $json = file_get_contents($file);
+        $tasks = json_decode($json, true);
+        if (!is_array($tasks)) {
+            $tasks = [];
+        }
+    }
     if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         $title = trim($_POST['title'] ?? '');
         $description = trim($_POST['description'] ?? '');
         // Validation: Ο Τίτλος να περιέχει τουλάχιστον 3 χαρακτήρες
         if ( strlen($title) >=3) {
-            $file = 'tasks.json';
-            if (file_exists($file)){
-                $json = file_get_contents($file);
-                $tasks = json_decode($json, true);
-                if (!is_array($tasks)) {
-                    $tasks = [];
-                }
-            }
+
 
             $ids = array_column($tasks, 'id');
             $newId = $ids ? max($ids) +1 : 1;
@@ -24,6 +25,7 @@
                 'is_done' => false
             ];
             file_put_contents($file, json_encode($tasks, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+            //Redirect σε index.php
             header("Location: index.php");
             exit();
         }else{
@@ -52,7 +54,8 @@
     <input type="text" name="description" placeholder="Προαιρετική περιγραφή" />
     <button type="submit">Προσθήκη</button>
   </form>
-
+  <?php 
+?>
   <ul>
     <?php foreach ($tasks as $task): ?>
       <li>
