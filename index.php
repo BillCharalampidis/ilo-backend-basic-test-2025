@@ -1,6 +1,7 @@
 <?php
     $tasks = [];
     $file = 'tasks.json';
+    $error = '';
     if (file_exists($file)){
         $json = file_get_contents($file);
         $tasks = json_decode($json, true);
@@ -12,9 +13,7 @@
         $title = trim($_POST['title'] ?? '');
         $description = trim($_POST['description'] ?? '');
         // Validation: Ο Τίτλος να περιέχει τουλάχιστον 3 χαρακτήρες
-        if ( strlen($title) >=3) {
-
-
+        if ( mb_strlen($title, 'UTF-8') >=3) {
             $ids = array_column($tasks, 'id');
             $newId = $ids ? max($ids) +1 : 1;
             //Προσθήκη νέου task
@@ -45,8 +44,8 @@
 <body>
   <h1>Task Manager</h1>
 <!-- Εμφάνιση μηνύματος λάθους -->
-  <?php if (!empty($error)): ?>
-    <p style="color: red;"><?= $error ?></p>
+  <?php if ($error): ?>
+    <p style="color: red;"><?= htmlspecialchars($error) ?></p>
   <?php endif; ?>
 
   <form method="POST" action="index.php">
