@@ -22,7 +22,8 @@
             file_put_contents($file, json_encode($tasks, JSON_PRETTY-PRINT));
             header("Location: index.php");
             exit();
+        }else{
+            $error = "O Τίτλος πρέπει να έχει τουλάχιστον 3 χαρακτήρες.";
         }
     }
-
 ?>
