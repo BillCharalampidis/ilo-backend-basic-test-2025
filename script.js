@@ -9,11 +9,18 @@ checkboxes.forEach(checkbox => {
         .then(response => response.json())
         .then(data => {
             if (data.success){
-                checkbox.classList.toggle('done', checkbox.checked);
-            } else {
+                const li = checkbox.closest('li');
+                const titleElement = li.querySelector('.title');
+                if (titleElement) {
+                titleElement.classList.toggle('done', checkbox.checked);
+                const descElement = li.querySelector('.description');
+                if (descElement) {
+                descElement.classList.toggle('done', checkbox.checked);
+}
+            }else {
                 alert('Κάτι πήγε στραβά με το toggle.');
                 checkbox.checked = !checkbox.checked;
-            }
+            }}
         })
         .catch(() => {
             alert('Σφάλμα δικτύου.');
