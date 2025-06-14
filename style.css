@@ -1,6 +1,52 @@
-/* style.css */
+li {
+  margin-bottom: 10px;
+  font-family: Arial, sans-serif;
+}
+li::before {
+  content: '📝';         
+  margin-right: 0.5em;
+  color: #4a90e2;
+}
 
 .done {
   text-decoration: line-through;
   color: gray;
+}
+
+.edit-form input[type="text"] {
+  margin-right: 5px;
+}
+
+button {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+button.delete-btn {
+  color: red;
+  background: none;
+  border: none;
+  font-size: 1.1em;
+}
+
+button.edit-btn {
+  background: none;
+  border: none;
+  font-size: 1.1em;
+}
+
+.edit-form {
+  margin-top: 5px;
+}
+
+h1 {
+  font-size: 2rem;                
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-weight: bold;
+  color: #2c3e50;                    
+  text-align: center;                
+  margin-bottom: 1em;
+  border-bottom: 2px solid #ccc;      
+  padding-bottom: 0.5em;
+  letter-spacing: 1px;
 }
