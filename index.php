@@ -42,6 +42,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <h1>Task Manager</h1>
 <!-- Εμφάνιση μηνύματος λάθους -->
   <?php if ($error): ?>
@@ -57,19 +58,33 @@
 ?>
   <ul>
     <?php foreach ($tasks as $task): ?>
-      <li>
+      <li data-id="<?= $task['id'] ?>">
         <!-- Εμφάνιση κάθε task με checkbox -->
         <input type="checkbox" <?= $task['is_done'] ? 'checked' : '' ?>
-               data-id="<?= $task['id'] ?>" />
+               data-id="<?= $task['id'] ?>" />             
                <!-- Προστασία από XSS -->
-        <strong><?= htmlspecialchars($task['title']) ?></strong>
-        <?php if (!empty($task['description'])): ?>
-          - <?= htmlspecialchars($task['description']) ?>
-        <?php endif; ?>
+               <strong class="title"><?= htmlspecialchars($task['title']) ?></strong>
+               <?php if (!empty($task['description'])): ?>
+              <span class="description"><?= htmlspecialchars($task['description']) ?></span>
+               <?php endif; ?>
+
+        <!-- Κουμπί για edit task -->
+        <button class="edit-btn" data-id="<?= $task['id'] ?>">✏️</button>
+         <!-- Κουμπί για διαγραφή task -->
+        <button class="delete-btn" data-id="<?= $task['id'] ?>">✖️</button>
+         <!--Φόρμα για edit task-->
+        <form class="edit-form" style="display:none;">
+      <input type="text" name="title" value="<?= htmlspecialchars($task['title']) ?>" required />
+      <input type="text" name="description" value="<?= htmlspecialchars($task['description']) ?>" />
+      <input type="hidden" name="id" value="<?= $task['id'] ?>">
+      <button type="submit">Save</button>
+      <button type="button" class="cancel-btn">Cancel</button>
+    </form>
       </li>
     <?php endforeach; ?>
   </ul>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
+
 </html>
